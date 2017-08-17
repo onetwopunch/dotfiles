@@ -1,0 +1,29 @@
+#!/bin/bash
+EXTERNAL_OUTPUT=HDMI1
+INTERNAL_OUTPUT=eDP1
+INTERNAL_MODE=1920x1080
+DAT_FILE=$HOME/.monitor.dat
+
+# if we don't have a file, start at zero
+if [ ! -f $DAT_FILE ] ; then
+  monitor_mode=all
+
+# otherwise read the value from the file
+else
+  monitor_mode=$(cat $DAT_FILE) 
+fi
+
+if [ $monitor_mode = "all" ]; then
+        monitor_mode="EXTERNAL"
+        xrandr --output $INTERNAL_OUTPUT --off --output $EXTERNAL_OUTPUT --auto
+elif [ $monitor_mode = "EXTERNAL" ]; then
+        monitor_mode="INTERNAL"
+        xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --off
+elif [ $monitor_mode = "INTERNAL" ]; then
+        monitor_mode="CLONES"
+        xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --mode $INTERNAL_MODE
+else
+        monitor_mode="all"
+        xrandr --output $INTERNAL_OUTPUT --auto --output $EXTERNAL_OUTPUT --mode $INTERNAL_MODE --above $INTERNAL_OUTPUT
+fi
+echo "${monitor_mode}" > $DAT_FILE
