@@ -1,0 +1,4 @@
+#!/bin/bash
+
+resp=$(curl "https://freegeoip.net/json/${ipex}" 2> /dev/null)
+echo "$(echo -n $resp | jq -r .city), $(echo -n $resp | jq -r .region_code)"

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+local face=${1:-shrug}
+local emoji=''
+case "$face" in 
+shrug) emoji='¯\_(ツ)_/¯' 
+  ;;
+lenny) emoji='( ͡° ͜ʖ ͡°)'
+  ;;
+flip) emoji='(╯°□°)╯︵ ┻━┻'
+  ;;
+palm) emoji='(－‸ლ)'
+  ;;
+*) echo "Enter a text face (shrug|lenny|disapprove|flip|palm)"
+  ;;
+esac
+echo -n $emoji | pbcopy
+if [[ ! -z $emoji ]]; then
+  echo "Copied $emoji to clipboard!"
+fi
