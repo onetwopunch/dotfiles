@@ -1,11 +1,11 @@
 #!/usr/bin/bash
 
 # Install essentials
-sudo apt install -y i3 i3blocks vim-gtx tmux xclip silversearcher-ag net-tools nmap autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev xrandr git
+sudo apt install -y i3 i3blocks tmux xclip silversearcher-ag net-tools nmap autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev git
 
 # Install rbenv
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+#git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+#git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 
 
 # Install pip
