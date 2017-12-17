@@ -1,0 +1,17 @@
+#!/bin/bash
+
+BACKLIGHT=/sys/devices/pci0000:00/0000:00:02.0/drm/card0/card0-eDP-1/intel_backlight/brightness
+current=$(cat $BACKLIGHT)
+
+if [[ $1 == "-inc" ]]; then
+  echo "$current + $2" | bc | tee $BACKLIGHT
+elif [[ $1 == "-dec" ]]; then
+  echo "$current - $2" | bc | tee $BACKLIGHT
+elif [[ $1 == "-set" ]]; then
+  echo $2 | tee $BACKLIGHT
+else
+  exit 1
+fi
+
+
+
