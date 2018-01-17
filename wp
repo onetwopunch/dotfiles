@@ -1,5 +1,0 @@
-#!/bin/bash
-
-unlink ~/.wallpaper
-ln -s $1 $HOME/.wallpaper
-i3-msg restart
