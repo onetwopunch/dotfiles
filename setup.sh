@@ -1,37 +1,33 @@
 #!/usr/bin/bash
+export TF_VERSION=0.11.13
+export GO_VERSION=1.12.5
 
 # Install essentials
-sudo apt install -y i3 i3blocks tmux xclip silversearcher-ag net-tools nmap autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev git
+sudo apt install -y tmux xclip silversearcher-ag net-tools nmap autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev git
 
-# Install rbenv
-#git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-#git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-
+# Install Terraform
+curl -o /tmp/terraform.zip "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip"
+pushd /tmp
+unzip terraform.zip
+sudo mv terraform /usr/local/bin/
+popd
 
 # Install pip
 sudo apt install -y python-setuptools python-dev build-essential
-sudo easy_install pip
-sudo pip install --upgrade virtualenv
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py --user
 
-# Install i3 blocks
-git clone git://github.com/vivien/i3blocks
-cd i3blocks
-make clean debug # or make clean all
-sudo make install
-cd ..
+# Install AWS ClI
+$HOME/.local/bin/pip install awscli --user
+
+# Install Golang
+curl -o /tmp/go.tar.gz "https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz"
+sudo tar -C /usr/local -xzf /tmp/go.tar.gz
+
 
 # Create workspace
 mkdir ~/Workspace 
 mkdir -p ~/.config
-
-# Install Powerline
-sudo apt install -y powerline
-mkdir -p ~/.fonts
-mkdir -p ~/.config/fontconfig/conf.d
-curl -L -o ~/.fonts/PowerlineSymbols.otf https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
-curl -L -o ~/.config/fontconfig/conf.d/10-powerline-symbols.conf \
-  https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
-fc-cache -vf ~/.fonts
 
 # Install git prompt
 curl -L -o ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
@@ -39,9 +35,6 @@ curl -L -o ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/con
 # Copy configuration files
 cp -R Scripts ~/
 cp -R .vim ~/
-cp -R .i3 ~/
-cp .i3blocks.conf ~/
 cp .vimrc	~/
-cp powerline ~/.config/
 cp .tmux.conf ~/
 cp .bashrc ~/
