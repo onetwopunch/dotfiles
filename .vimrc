@@ -11,7 +11,6 @@
 set nocompatible
 
 let g:NERDTreeDirArrows=0
-let g:go_fmt_autosave=0
 " Allows everything extracted in ~/.vim/bundle to be added to runtimepath
 " For installing plugins
 execute pathogen#infect()
@@ -32,6 +31,8 @@ set rtp+=/usr/share/powerline/bindings/vim
 set laststatus=2
 set t_Co=256
 
+" air-line
+let g:airline_powerline_fonts = 1
 "python3 from powerline.vim import setup as powerline_setup
 "python3 powerline_setup()
 "python3 del powerline_setup
@@ -46,7 +47,7 @@ colorscheme molokai
 "colorscheme desert
 "set background=dark
 "colorscheme solarized
-set gfn=Monaco:h13
+set guifont=Roboto\ Mono\ for\ Powerline:h14
 
 " clipboard
 vnoremap <C-y> "+y
@@ -65,21 +66,28 @@ set hlsearch
 
 "Indent and tabs
 autocmd BufReadPost * :DetectIndent
-autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
+"autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 
 " Remove trailing whitespace on save
 autocmd BufWritePost * :s/\s\+$//ge
 autocmd BufWritePost *.* :s/\t/  /ge
 autocmd BufWritePost Makefile :s/  /\t/ge
+autocmd BufWritePost *.go !gofmt -w %
 
 "autocomplete
 set completeopt=longest,menuone
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <NUL> pumvisible() ? '<C-n>' :
-  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+  \ '<C-n><C-r>=pumvisible() ? "<Down>" : ""<CR>'
 
 inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-  \ '<C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+  \ '<C-o><C-n><C-p><C-r>=pumvisible() ? "<Down>" : ""<CR>'
+
+if has("gui_running")
+  inoremap <C-Space> <C-n>
+else
+  inoremap <Nul> <C-n>
+endif
 
 " Enable file type detection and do language-dependent indenting.
 " filetype plugin indent on
